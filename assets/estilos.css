@@ -1,0 +1,150 @@
+/* =========================================================
+   ESTÉTICA FINANCIERA INSTITUCIONAL (Títulos Blancos Forzados)
+   ========================================================= */
+
+.stApp {
+    background-color: #070D1B !important;
+    color: #94A3B8 !important;
+    font-family: 'Source Sans Pro', sans-serif, -apple-system, BlinkMacSystemFont;
+}
+
+header[data-testid="stHeader"] {
+    background-color: transparent !important;
+}
+
+/* =========================================================
+   1. REGULARES EXCLUSIVAS: TÍTULOS Y SUBTÍTULOS EN BLANCO
+   ========================================================= */
+/* Forzar blanco en todas las etiquetas de encabezado y sus hijos (iconos, spans) */
+.stApp h1, .stApp h2, .stApp h3, .stApp h4, .stApp h5, .stApp h6,
+.stApp h1 *, .stApp h2 *, .stApp h3 *, .stApp h4 *, .stApp h5 *, .stApp h6 *,
+div[data-testid="stMarkdownContainer"] h1, 
+div[data-testid="stMarkdownContainer"] h2, 
+div[data-testid="stMarkdownContainer"] h3, 
+div[data-testid="stMarkdownContainer"] h4,
+div[data-testid="stMarkdownContainer"] h1 *, 
+div[data-testid="stMarkdownContainer"] h2 *, 
+div[data-testid="stMarkdownContainer"] h3 *, 
+div[data-testid="stMarkdownContainer"] h4 *,
+.stHeadingContainer *, 
+[data-testid="stSubheader"] *,
+[data-testid="stTitle"] * {
+    color: #FFFFFF !important;
+    fill: #FFFFFF !important; /* Mantiene los iconos del título en blanco */
+    font-weight: 700 !important;
+}
+
+/* Textos generales, etiquetas y párrafos secundarios en gris institucional */
+.stApp p, .stApp label, .stApp span, .stMarkdown {
+    color: #94A3B8 !important;
+    font-weight: 400;
+}
+
+/* Re-asegurar que las letras dentro de encabezados no se vuelvan grises por la regla de 'span' */
+h1 span, h2 span, h3 span, h4 span {
+    color: #FFFFFF !important;
+}
+
+/* =========================================================
+   2. BARRA LATERAL (SIDEBAR)
+   ========================================================= */
+section[data-testid="stSidebar"] {
+    background-color: #0B132B !important;
+    border-right: 1px solid rgba(0, 102, 255, 0.25) !important;
+}
+
+section[data-testid="stSidebar"] span, 
+section[data-testid="stSidebar"] p, 
+section[data-testid="stSidebar"] label {
+    color: #E2E8F0 !important;
+}
+
+section[data-testid="stSidebar"] h1,
+section[data-testid="stSidebar"] h2,
+section[data-testid="stSidebar"] h3 {
+    color: #FFFFFF !important;
+}
+
+/* =========================================================
+   3. CONTENEDORES Y TARJETAS GENERALES (Fondo oscuro)
+   ========================================================= */
+.stAlert, div[data-testid="stExpander"], div[data-baseweb="card"], div[data-testid="stContainer"] {
+    background-color: #111A30 !important;
+    border: 1px solid rgba(0, 102, 255, 0.4) !important;
+    border-radius: 14px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+.stAlert *, div[data-testid="stExpander"] * {
+    color: #FFFFFF !important;
+}
+
+/* Inputs de texto y números normales */
+div[data-baseweb="input"],
+div[data-baseweb="select"],
+div[data-testid="stTextInput"] input,
+div[data-testid="stNumberInput"] input {
+    background-color: #16223D !important;
+    color: #FFFFFF !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    font-weight: 500 !important;
+}
+
+/* =========================================================
+   4. EXCLUSIVO: BARRA DE FÓRMULAS EN BLANCO CON BORDES AZULES
+   ========================================================= */
+div[data-testid="stVerticalBlock"] iframe {
+    background-color: #FFFFFF !important;
+    border: 2px solid #0066FF !important;
+    border-radius: 12px !important;
+}
+
+/* =========================================================
+   5. BOTONES (Azul eléctrico profesional)
+   ========================================================= */
+button[kind="primary"], div.stButton > button {
+    background-color: #0066FF !important;
+    color: #FFFFFF !important;
+    font-weight: 600 !important;
+    border-radius: 10px !important;
+    border: 1px solid #38BDF8 !important;
+    box-shadow: 0px 4px 12px rgba(0, 102, 255, 0.35) !important;
+}
+
+button[kind="primary"]:hover, div.stButton > button:hover {
+    background-color: #0052CC !important;
+    color: #FFFFFF !important;
+}
+
+/* =========================================================
+   6. CONTENEDOR DE RESULTADOS
+   ========================================================= */
+div.window-risk {
+    background-color: #111A30 !important;
+    border: 1.5px solid rgba(0, 102, 255, 0.5) !important;
+    border-radius: 16px !important;
+    padding: 24px !important;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5) !important;
+    margin-top: 20px !important;
+}
+
+div.window-risk,
+div.window-risk *,
+div.window-risk p,
+div.window-risk label,
+div.window-risk span {
+    color: #FFFFFF !important;
+}
+
+div.window-risk div[data-testid="stMetric"] {
+    background-color: #16223D !important;
+    border: 1.5px solid rgba(0, 102, 255, 0.6) !important;
+    border-radius: 12px !important;
+    padding: 14px !important;
+}
+
+div.window-risk div[data-testid="stMetricValue"] div {
+    color: #38BDF8 !important;
+    font-weight: 700 !important;
+}
