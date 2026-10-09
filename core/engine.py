@@ -57,13 +57,12 @@ def ejecutar_simulacion(df_variables, formula_compilada, num_simulaciones, usar_
             variables[var_nombre] = valores.astype(float)
             
     # Evaluación de la fórmula final de simulación
-    variables[list(variables.keys())[0]] # Referencia para mantener contexto si se requiere
+    variables[list(variables.keys())[0]]
     evaluado = eval(formula_compilada, {"np": np, "variables": variables})
     variables['resultado_evaluado'] = evaluado
     
     return pd.DataFrame(variables)
-    
-    # Añadir al final de core/engine.py
+
 
 def simular_escenario_minero(df_zonas, num_simulaciones=1000):
     """
@@ -76,13 +75,12 @@ def simular_escenario_minero(df_zonas, num_simulaciones=1000):
     for _, zona in df_zonas.iterrows():
         tms = float(zona['TMS'])
         ley_media = float(zona['Ley (g-Au/t)'])
-        # Convertir porcentajes a decimales
         rec_media = float(zona['Recuperación (%)']) / 100.0
         precio = float(zona['Precio ($)'])
         costo_tms = float(zona['Costo Explotación ($/t)'])
         certeza = float(zona['Certeza Geológica (%)']) / 100.0
         
-        # A menor certeza, mayor desviación estándar (mayor riesgo de variación)
+        # A menor certeza, mayor desviación estándar (mayor volatilidad)
         std_ley = ley_media * (1.0 - certeza)
         std_rec = rec_media * (1.0 - certeza)
         
@@ -90,11 +88,11 @@ def simular_escenario_minero(df_zonas, num_simulaciones=1000):
         ley_sim = np.random.normal(ley_media, std_ley, num_simulaciones)
         rec_sim = np.random.normal(rec_media, std_rec, num_simulaciones)
         
-        # Limitar para evitar leyes negativas o recuperaciones irreales (>100%)
+        # Prevenir valores irreales
         ley_sim = np.clip(ley_sim, 0.001, None)
         rec_sim = np.clip(rec_sim, 0.001, 1.0)
         
-        # Fórmulas del modelo financiero minero
+        # Modelo financiero minero
         onzas_sim = (tms * ley_sim * rec_sim) / 31.1035
         valorizado_sim = onzas_sim * precio
         costo_sim = tms * costo_tms
