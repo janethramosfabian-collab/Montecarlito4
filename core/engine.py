@@ -62,3 +62,48 @@ def ejecutar_simulacion(df_variables, formula_compilada, num_simulaciones, usar_
     variables['resultado_evaluado'] = evaluado
     
     return pd.DataFrame(variables)
+    
+    # Añadir al final de core/engine.py
+
+def simular_escenario_minero(df_zonas, num_simulaciones=1000):
+    """
+    Simula el VNA (Utilidad) y Onzas de un escenario minero basado en zonas.
+    La Certeza Geológica define la volatilidad (desviación estándar) de Ley y Recuperación.
+    """
+    total_onzas_sim = np.zeros(num_simulaciones)
+    total_utilidad_sim = np.zeros(num_simulaciones)
+    
+    for _, zona in df_zonas.iterrows():
+        tms = float(zona['TMS'])
+        ley_media = float(zona['Ley (g-Au/t)'])
+        # Convertir porcentajes a decimales
+        rec_media = float(zona['Recuperación (%)']) / 100.0
+        precio = float(zona['Precio ($)'])
+        costo_tms = float(zona['Costo Explotación ($/t)'])
+        certeza = float(zona['Certeza Geológica (%)']) / 100.0
+        
+        # A menor certeza, mayor desviación estándar (mayor riesgo de variación)
+        std_ley = ley_media * (1.0 - certeza)
+        std_rec = rec_media * (1.0 - certeza)
+        
+        # Generar simulaciones (Distribución Normal)
+        ley_sim = np.random.normal(ley_media, std_ley, num_simulaciones)
+        rec_sim = np.random.normal(rec_media, std_rec, num_simulaciones)
+        
+        # Limitar para evitar leyes negativas o recuperaciones irreales (>100%)
+        ley_sim = np.clip(ley_sim, 0.001, None)
+        rec_sim = np.clip(rec_sim, 0.001, 1.0)
+        
+        # Fórmulas del modelo financiero minero
+        onzas_sim = (tms * ley_sim * rec_sim) / 31.1035
+        valorizado_sim = onzas_sim * precio
+        costo_sim = tms * costo_tms
+        utilidad_sim = valorizado_sim - costo_sim
+        
+        total_onzas_sim += onzas_sim
+        total_utilidad_sim += utilidad_sim
+        
+    return pd.DataFrame({
+        'Onzas': total_onzas_sim,
+        'VNA': total_utilidad_sim
+    })
